@@ -1,21 +1,36 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <div class="container">
         <!--<div class="container-fluid">-->
-            <a class="navbar-brand" href="#">Datng App</a>
+            <a class="navbar-brand" routerLink="/" routerLinkActive='active'>Datng App</a>
          <!--   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>-->
           <!--  <div class="collapse navbar-collapse" id="navbarCollapse">-->
-              <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$|async">
+              <ul class="navbar-nav me-auto mb-2 mb-md-0" ><!-- *ngIf="accountService.currentUser$|async"  -->
+              
+                <ng-container *ngIf="accountService.currentUser$|async"> 
+                  <li class="nav-item">
+                    <a class="nav-link " aria-current="page" routerLink="/members"routerLinkActive='active'>Matches</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" routerLink="/lists" routerLinkActive='active'>Lists</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" routerLink="/messages" routerLinkActive='active'>Masages</a>
+                  </li>
+                </ng-container>
+                
+                <!--
                 <li class="nav-item">
-                  <a class="nav-link " aria-current="page" href="#">Matches</a>
+                  <a class="nav-link " aria-current="page" routerLink="/members"routerLinkActive='active'>Matches</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Lists</a>
+                  <a class="nav-link" routerLink="/lists" routerLinkActive='active'>Lists</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link ">Masages</a>
+                  <a class="nav-link" routerLink="/messages" routerLinkActive='active'>Masages</a>
                 </li>
+                -->
                <!--
                 <li class="nav-item">
                   <a class="nav-link"  (click) ="logout()" >Logout</a>
@@ -27,9 +42,9 @@
               
               
               <!--Umesto currentUser$ u linijama  28,39,3-->
-              <div class="dropdown"  *ngIf="accountService.currentUser$|async"  dropdown>
+              <div class="dropdown"  *ngIf="(accountService.currentUser$|async) as user" dropdown> <!--  *ngIf="accountService.currentUser$|async"   -->
 
-                <a  class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+                <a  class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username| titlecase}}</a>
                 <div class="dropdown-menu mt-3" *dropdownMenu>
                <a  class="dropdown-item">Edit profile</a>
                <div class="dropdown-devider"></div>
@@ -51,7 +66,7 @@
                  class="form-control me-2" 
                  type="password" 
                  placeholder="Password" >
-                <button class="btn btn-outline-success" type="submit">Login</button>
+                <button class="btn btn-outline-danger" type="submit">Login</button>
               </form>
           <!--  </div>-->
          <!-- </div>-->

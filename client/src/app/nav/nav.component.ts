@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
@@ -14,7 +16,7 @@ export class NavComponent implements OnInit {
   
   /* kada se implementira async  pipe  linija 16 je nepotrebna jer se podaci nalaze u liniji 23*/
   /*currentUser$ : Observable<User | null>;*/ /* treba dodati u tsconfig.json liniju '"strictPropertyInitialization": false"'*/ 
-   constructor(public accountService:AccountService) { }
+   constructor(public accountService:AccountService,private router:Router,private toastr:ToastrService) { }
 
   ngOnInit(): void
   
@@ -33,14 +35,21 @@ login(){
 
 })*/
 
-this.accountService.login(this.model).subscribe({
+/*this.accountService.login(this.model).subscribe({
+  
   
   next:response => {console.log(response)},
-   
   error: error => {console.log(error)}
 
-})
+})*/
+this.accountService.login(this.model).subscribe({
+  
+  /*next:response => {console.log(response)},*/
+  next:response => {this.router.navigateByUrl('/members')},
+  error: error => {console.log(error);
+  this.toastr.error(error.error)}
 
+})
 
 }
 
@@ -50,7 +59,9 @@ this.accountService.login(this.model).subscribe({
 logout()
 {
   this.accountService.logout();
- /* this.loggedIn=false;*/
+  this.router.navigateByUrl('/')
+  
+  /* this.loggedIn=false;*/
 
 }
  
